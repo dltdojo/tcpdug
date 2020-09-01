@@ -1,0 +1,291 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>TaiChung PolkaDot UserGroup</title>
+        
+        <meta name="robots" content="noindex" />
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> TCPDUG</a></li><li class="chapter-item expanded "><a href="events/index.html"><strong aria-hidden="true">2.</strong> 活動事件</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="events/event2020.html"><strong aria-hidden="true">2.1.</strong> 2020</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">TaiChung PolkaDot UserGroup</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#tcpdug-台中波卡使用者群組" id="tcpdug-台中波卡使用者群組">TCPDUG 台中波卡使用者群組</a></h1>
+<h1><a class="header" href="#服務" id="服務">服務</a></h1>
+<ul>
+<li><a href="https://polkadot.js.org/apps/#/accounts">polkadot.js.org/apps</a></li>
+</ul>
+<h1><a class="header" href="#開發資源" id="開發資源">開發資源</a></h1>
+<ul>
+<li><a href="https://substrate.dev/">Official Substrate Documentation for Blockchain Developers · Substrate Developer Hub</a></li>
+</ul>
+<h2><a class="header" href="#substrate-中文" id="substrate-中文">Substrate 中文</a></h2>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/173576039">Substrate 技术资源列表 - 知乎</a></li>
+<li><a href="https://github.com/SubstrateCourse">SubstrateCourse</a></li>
+<li><a href="https://zhuanlan.zhihu.com/substrate">Substrate区块链开发 - 知乎</a></li>
+<li><a href="https://zhuanlan.zhihu.com/c_74315572">链块与分散的数据 - 知乎</a></li>
+</ul>
+<h2><a class="header" href="#links" id="links">Links</a></h2>
+<ul>
+<li><a href="https://coinmarketcap.com/currencies/polkadot-new/">Polkadot (DOT) | CoinMarketCap</a></li>
+<li><a href="https://coinmarketcap.com/currencies/kusama/">Kusama (KSM) | CoinMarketCap</a></li>
+</ul>
+<h1><a class="header" href="#events" id="events">Events</a></h1>
+<h1><a class="header" href="#event2020" id="event2020">Event2020</a></h1>
+<h1><a class="header" href="#2020-0902-burn-dot" id="2020-0902-burn-dot">2020-0902-burn-dot</a></h1>
+<p>中元流動性普渡</p>
+<p>去年本來要燒 Grin 結果太隱密很難燒換燒比特幣，今年波卡上線加上以太坊流動性挖礦風潮，趕流行徵求流動性提供者 Liquidity Provider (LP)，不需合約，直接先燒 0.5 DOT 到 11111111111111111111111111111Gzr8zVsW 地址後保證 200% 返還 1 DOT，名額有限只有五名，欲燒從速，但須等台北時間中元子時過後才開始算，注意單一地址只能燒一次。話說不管是金爐合約還是金爐跑環RUNTIME現在都還沒辦法上波卡主鏈，燒完 DOT 沒辦法自動燒出 LP token 來換個素果之類的。</p>
+<pre><code class="language-js">// 2020年中元在國曆9月2日
+const { encodeAddress } = require('@polkadot/keyring');
+
+const zero = '0x' + '00'.repeat(28) + '20200715';
+// https://github.com/paritytech/substrate/wiki/External-Address-Format-(SS58)
+// 00000000b (0) Polkadot Live (SS58 checksum preimage)
+// 00000001b (1) Polkadot Live (reserved for secondary use)
+// 00000010b (2) Polkadot Canary (SS58 checksum preimage)
+// 00000011b (3) Polkadot Canary (reserved for secondary use)
+// 00101010b (42) Generic Substrate wildcard (SS58 checksum preimage)
+const SS58FormatPolkadot = 0;
+const SS58FormatKusama = 2;
+console.log(encodeAddress(zero, SS58FormatPolkadot).toString());
+// 11111111111111111111111111111Gzr8zVsW
+console.log(encodeAddress(zero, SS58FormatKusama).toString());
+// CaKWz5omakTK7ovp4m3koXrHyHb7NG3Nt7GENHcCi37ZFKP
+</code></pre>
+<p>參考資料</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/60044378/how-do-i-generate-a-burn-address-for-substrate-chains-like-polkadot-or-kusama">blockchain - How do I generate a burn address for Substrate chains like Polkadot or Kusama? - Stack Overflow</a></li>
+<li><a href="https://polkadot.subscan.io/account/11111111111111111111111111111Gzr8zVsW">11111111111111111111111111111Gzr8zVsW | Polkadot</a></li>
+<li><a href="https://medium.com/sushiswap/the-sushiswap-project-c4049ea9941e">The SushiSwap Project 🍣🍣🍣. An evolution of Uniswap with SUSHI… | by SushiSwap | SushiSwap | Aug, 2020 | Medium</a></li>
+<li><a href="https://www.blockchain.com/btc/address/1Ghost2o18o715ZZZZZZZZZZZZZZfTUTEh">1Ghost2o18o715ZZZZZZZZZZZZZZfTUTEh | BTC</a></li>
+<li><a href="https://www.blockchain.com/btc/address/1Friends2o19o715VVVVVVVVVVVVUA9mTC">1Friends2o19o715VVVVVVVVVVVVUA9mTC | BTC</a></li>
+<li><a href="https://github.com/dltdojo/book2018-quantumxie/blob/master/projects/gij2018/GIJ2018.md">book2018-quantumxie/GIJ2018.md · dltdojo/book2018-quantumxie</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>

@@ -1,0 +1,10 @@
+[book]
+authors = ["y12studio"]
+language = "en"
+multilingual = false
+src = "booksrc"
+title = "TaiChung PolkaDot UserGroup"
+
+[build]
+build-dir = "docs"
+create-missing = false
