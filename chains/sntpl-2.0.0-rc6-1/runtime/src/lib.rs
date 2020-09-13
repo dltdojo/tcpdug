@@ -252,6 +252,16 @@ impl pallet_transaction_payment::Trait for Runtime {
 	type FeeMultiplierUpdate = ();
 }
 
+#[allow(unused_imports)]
+use pallet_generic_asset::{AssetCurrency, AssetIdProvider, SpendingAssetCurrency};
+
+impl pallet_generic_asset::Trait for Runtime {
+	/// The type for recording an account's balance.
+	type Balance = Balance;
+	type AssetId = u32;
+ 	type Event = Event;
+}
+
 impl pallet_sudo::Trait for Runtime {
 	type Event = Event;
 	type Call = Call;
@@ -278,6 +288,7 @@ construct_runtime!(
 		TransactionPayment: pallet_transaction_payment::{Module, Storage},
 		Sudo: pallet_sudo::{Module, Call, Config<T>, Storage, Event<T>},
 		// Include the custom logic from the template pallet in the runtime.
+		GenericAsset: pallet_generic_asset::{Module, Call, Storage, Config<T>, Event<T>},
 		TemplateModule: template::{Module, Call, Storage, Event<T>},
 	}
 );
