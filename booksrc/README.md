@@ -1,21 +1,16 @@
 # TCPDUG 台中波卡使用者群組
 
-# 服務
+# 資源
 
-- [GitHub - dltdojo/tcpdug: TaiChung PolkaDot UserGroup (TCPDUG)](https://github.com/dltdojo/tcpdug)
-- [polkadot.js.org/apps](https://polkadot.js.org/apps/#/accounts)
-
-# 開發資源
-
-- [Official Substrate Documentation for Blockchain Developers · Substrate Developer Hub](https://substrate.dev/)
-
-中文
-
-- [Substrate 技术资源列表 - 知乎](https://zhuanlan.zhihu.com/p/173576039)
-- [SubstrateCourse](https://github.com/SubstrateCourse)
-- [Substrate区块链开发 - 知乎](https://zhuanlan.zhihu.com/substrate)
-- [链块与分散的数据 - 知乎](https://zhuanlan.zhihu.com/c_74315572)
-- [Substrate的国密探险日记 - 知乎](https://zhuanlan.zhihu.com/p/134138900)
+- TCPDUG
+  - [GitHub - dltdojo/tcpdug: TaiChung PolkaDot UserGroup (TCPDUG)](https://github.com/dltdojo/tcpdug)
+- Apps
+  - [polkadot.js.org/apps](https://polkadot.js.org/apps/#/accounts)
+- DevDocs
+  - [Official Substrate Documentation for Blockchain Developers · Substrate Developer Hub](https://substrate.dev/)
+- DevDocs(Chinese)
+  - [Substrate 技术资源列表 - 知乎](https://zhuanlan.zhihu.com/p/173576039)
+  - [SubstrateCourse](https://github.com/SubstrateCourse)
 
 # 社群
 
@@ -34,7 +29,7 @@
   - [Acala, Laminar](https://discord.com/channels/709208197549785148/725165725433462865)
 
 
-## Links
+# Links
 
 - [Polkadot (DOT) | CoinMarketCap](https://coinmarketcap.com/currencies/polkadot-new/)
 - [Kusama (KSM) | CoinMarketCap](https://coinmarketcap.com/currencies/kusama/)

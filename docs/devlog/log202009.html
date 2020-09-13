@@ -93,7 +93,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html"><strong aria-hidden="true">1.</strong> TCPDUG</a></li><li class="chapter-item expanded "><a href="../events/index.html"><strong aria-hidden="true">2.</strong> 活動事件</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../events/event2020.html"><strong aria-hidden="true">2.1.</strong> 2020</a></li></ol></li><li class="chapter-item expanded "><a href="../devlog/index.html"><strong aria-hidden="true">3.</strong> 開發日誌</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../devlog/log202009.html" class="active"><strong aria-hidden="true">3.1.</strong> 202009</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html"><strong aria-hidden="true">1.</strong> TCPDUG</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../volunteers.html"><strong aria-hidden="true">1.1.</strong> 志工徵求</a></li></ol></li><li class="chapter-item expanded "><a href="../events/index.html"><strong aria-hidden="true">2.</strong> 活動事件</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../events/event2020.html"><strong aria-hidden="true">2.1.</strong> 2020</a></li></ol></li><li class="chapter-item expanded "><a href="../devlog/index.html"><strong aria-hidden="true">3.</strong> 開發日誌</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../devlog/log202009.html" class="active"><strong aria-hidden="true">3.1.</strong> 202009</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -161,7 +161,10 @@
                     <main>
                         <h1><a class="header" href="#2020-09" id="2020-09">2020 09</a></h1>
 <h2><a class="header" href="#2020-0913" id="2020-0913">2020-0913</a></h2>
-<p>DD0J1 dev testnet</p>
+<p>dev chain sntpl-2.0.0-rc6-1 (DD0J1)</p>
+<p>目前建立平行鏈  實做多資產的方式採用整合 <a href="https://github.com/paritytech/substrate/tree/master/frame/generic-asset">pallet-generic-asset</a> 方式，修改的部份 <a href="https://github.com/dltdojo/tcpdug/commit/18ba9d5c309f0c3ab1924c8f47bf433c17d96e24">dev testnet dd0j1 with pallet-generic-assets · dltdojo/tcpdug@18ba9d5</a> 請參考。要注意的是目前整個 substrate 的狀態即使到 rc6 還是不固定，如果版本不對，修改支援 pallet-generic-asset 的地方也必須因應改變，等到版本出來會在製作一版。</p>
+<p>另一個修改的是 <a href="https://www.substrate.io/kb/integrate/chain-spec">Substrate_ | Chain Specification</a> 加上測試鏈的名稱與原生幣的單位 DD0J。</p>
+<p>測試採用 <a href="https://polkadot.js.org/apps/">Polkadot/Substrate Portal</a> 來進行，除了瀏覽器不須安裝其他程式，於 Extrinsic submission 執行修改狀態之交易，另外用 Chain state 讀取狀態。</p>
 <p><img src="images/asset-create-2020-09-13.png" alt="img1" /></p>
 <p><img src="images/assets-state-2020-09-13.png" alt="img1" /></p>
 <pre><code class="language-sh">tcpdug/chains/sntpl-2.0.0-rc6-1$ target/debug/node-template purge-chain --dev
