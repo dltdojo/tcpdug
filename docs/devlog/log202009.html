@@ -160,6 +160,21 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#2020-09" id="2020-09">2020 09</a></h1>
+<h2><a class="header" href="#2020-0916" id="2020-0916">2020-0916</a></h2>
+<pre><code class="language-sh">$ cd chains/sntpl-2.0.0-rc6-1
+$ scripts/docker_build.sh
+$ docker tag foo docker.pkg.github.com/dltdojo/tcpdug/substrate:2.0.0-rc6-1
+$ docker push docker.pkg.github.com/dltdojo/tcpdug/substrate:2.0.0-rc6-1
+</code></pre>
+<h2><a class="header" href="#2020-0914" id="2020-0914">2020-0914</a></h2>
+<p>外接需要 <a href="https://wiki.polkadot.network/docs/en/maintain-wss">Set up Secure WebSocket for Remote Connections · Polkadot Wiki</a>，只是要設定 nginx 會佔去機器的 443 port。</p>
+<p>支援 Ethereum 的公鏈專案，Avalanche 架構將以太坊支援直接放在 C-Chains 上是直接出廠配備，另外波卡的 Ink! 一直改版未穩定，可直接使用 Ethereum 的 frontier 也是，而 Cosmos ethermint 只出到 0.1.0 版本。 </p>
+<ul>
+<li><a href="https://docs.avax.network/v1.0/en/tutorials/deploy-a-smart-contract/">Deploy a Smart Contract - Avalanche Documentation</a></li>
+<li><a href="https://github.com/paritytech/frontier">paritytech/frontier: Ethereum compatibility layer for Substrate.</a></li>
+<li><a href="https://medium.com/acalanetwork/acala-unveils-smart-contracts-and-ethereum-compatibility-for-polkadot-defi-588b3891e53d">Acala Unveils Smart Contracts and Ethereum Compatibility for Polkadot DeFi | by Dan Reecer | Acala Network | Sep, 2020 | Medium</a></li>
+<li><a href="https://github.com/ChainSafe/ethermint/releases/tag/v0.1.0">Release v0.1.0 · ChainSafe/ethermint</a></li>
+</ul>
 <h2><a class="header" href="#2020-0913" id="2020-0913">2020-0913</a></h2>
 <p>dev chain sntpl-2.0.0-rc6-1 (DD0J1)</p>
 <p>目前建立平行鏈  實做多資產的方式採用整合 <a href="https://github.com/paritytech/substrate/tree/master/frame/generic-asset">pallet-generic-asset</a> 方式，修改的部份 <a href="https://github.com/dltdojo/tcpdug/commit/18ba9d5c309f0c3ab1924c8f47bf433c17d96e24">dev testnet dd0j1 with pallet-generic-assets · dltdojo/tcpdug@18ba9d5</a> 請參考。要注意的是目前整個 substrate 的狀態即使到 rc6 還是不固定，如果版本不對，修改支援 pallet-generic-asset 的地方也必須因應改變，等到版本出來會在製作一版。</p>
