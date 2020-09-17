@@ -4,7 +4,7 @@
 
 - TCPDUG
   - [GitHub - dltdojo/tcpdug: TaiChung PolkaDot UserGroup (TCPDUG)](https://github.com/dltdojo/tcpdug)
-  - Docker Image [docker.pkg.github.com/dltdojo/tcpdug/substrate](https://github.com/dltdojo/tcpdug/packages/400747)
+  - Docker Image [ghcr.io/dltdojo/substrate](https://github.com/orgs/dltdojo/packages/container/package/substrate)
 - Apps
   - [polkadot.js.org/apps](https://polkadot.js.org/apps/#/accounts)
 - DevDocs

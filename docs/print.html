@@ -167,7 +167,7 @@
 <li>TCPDUG
 <ul>
 <li><a href="https://github.com/dltdojo/tcpdug">GitHub - dltdojo/tcpdug: TaiChung PolkaDot UserGroup (TCPDUG)</a></li>
-<li>Docker Image <a href="https://github.com/dltdojo/tcpdug/packages/400747">docker.pkg.github.com/dltdojo/tcpdug/substrate</a></li>
+<li>Docker Image <a href="https://github.com/orgs/dltdojo/packages/container/package/substrate">ghcr.io/dltdojo/substrate</a></li>
 </ul>
 </li>
 <li>Apps
@@ -260,6 +260,16 @@ console.log(encodeAddress(zero, SS58FormatKusama).toString());
 </ul>
 <h1><a class="header" href="#開發日誌" id="開發日誌">開發日誌</a></h1>
 <h1><a class="header" href="#2020-09" id="2020-09">2020 09</a></h1>
+<h2><a class="header" href="#2020-0917" id="2020-0917">2020-0917</a></h2>
+<p>github 的容器庫有兩種版本，可以無登入公開拉取的容器庫需推到 ghcr.io </p>
+<ul>
+<li><a href="https://docs.github.com/en/packages/getting-started-with-github-container-registry/migrating-to-github-container-registry-for-docker-images">Migrating to GitHub Container Registry for Docker images - GitHub Docs</a></li>
+<li><a href="https://github.com/orgs/dltdojo/packages/container/package/substrate">Package substrate</a></li>
+<li><a href="https://github.com/dltdojo/tcpdug/packages/400747">Package substrate · dltdojo/tcpdug</a></li>
+</ul>
+<pre><code>$ docker tag foo ghcr.io/dltdojo/substrate:2.0.0-rc6-1
+$ docker push ghcr.io/dltdojo/substrate:2.0.0-rc6-1
+</code></pre>
 <h2><a class="header" href="#2020-0916" id="2020-0916">2020-0916</a></h2>
 <pre><code class="language-sh">$ cd chains/sntpl-2.0.0-rc6-1
 $ scripts/docker_build.sh
