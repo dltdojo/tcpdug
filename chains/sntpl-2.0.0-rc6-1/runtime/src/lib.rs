@@ -272,6 +272,11 @@ impl template::Trait for Runtime {
 	type Event = Event;
 }
 
+impl xasset::Trait for Runtime {
+	type Event = Event;
+	type Currency = Balances;
+}
+
 // Create the runtime by composing the FRAME pallets that were previously configured.
 construct_runtime!(
 	pub enum Runtime where
@@ -290,6 +295,7 @@ construct_runtime!(
 		// Include the custom logic from the template pallet in the runtime.
 		GenericAsset: pallet_generic_asset::{Module, Call, Storage, Config<T>, Event<T>},
 		TemplateModule: template::{Module, Call, Storage, Event<T>},
+		XassetModule: xasset::{Module, Call, Storage, Event<T>},
 	}
 );
 
