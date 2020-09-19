@@ -1,0 +1,136 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginxsvc
+  labels:
+    app: nginx
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      protocol: TCP
+      name: http
+    - port: 443
+      protocol: TCP
+      name: https
+  selector:
+    app: nginx
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-nginx-tls
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      volumes:
+        - name: secret-vol
+          secret:
+            secretName: nginx-secret101
+        - name: configmap-vol
+          configMap:
+            name: nginx-configmap-proxy-101
+      containers:
+        - name: nginx-front
+          image: docker.io/nginx:1.19-alpine
+          ports:
+            - containerPort: 443
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /etc/nginx/ssl
+              name: secret-vol
+            - mountPath: /etc/nginx/conf.d
+              name: configmap-vol
+        - name: substrate-node
+          image: ghcr.io/dltdojo/substrate:2.0.0-rc6-1
+          # docker run -it -p 9944:9944 ghcr.io/dltdojo/substrate:2.0.0-rc6-1 --dev --unsafe-ws-external
+          # image: parity/substrate
+          command: 
+            - /usr/local/bin/substrate
+          args: 
+            - --dev
+            - --unsafe-ws-external
+          ports:
+            - containerPort: 9944
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-configmap-tls-101
+data:
+  nginx.conf: |-
+    server {
+
+            server_name 127.0.0.1.nip.io;
+
+            root /var/www/html;
+            index index.html;
+
+            listen [::]:443 ssl ipv6only=on;
+            listen 443 ssl;
+            # kubectl create secret tls nginx-secret101 --key nginx.key --cert /etc/nginx/ssl/tls.crt
+            location / {
+              root /usr/share/nginx/html;
+            }
+            ssl_certificate /etc/nginx/ssl/tls.crt;
+            ssl_certificate_key /etc/nginx/ssl/tls.key;
+
+            ssl_session_cache shared:cache_nginx_SSL:1m;
+            ssl_session_timeout 1440m;
+
+            ssl_protocols TLSv1 TLSv1.2;
+            ssl_prefer_server_ciphers on;
+
+            ssl_ciphers "ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA:ECDHE-ECDSA-DES-CBC3-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA:!DSS";
+
+            # ssl_dhparam /etc/nginx/dhparam.pem;
+
+    }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-configmap-proxy-101
+data:
+  nginx.conf: |-
+    server {
+
+            server_name 127.0.0.1.nip.io;
+
+            root /var/www/html;
+            index index.html;
+
+            location / {
+              proxy_pass http://localhost:9944;
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header Host $host;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+              proxy_http_version 1.1;
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_set_header Connection "upgrade";
+            }
+
+            listen [::]:443 ssl ipv6only=on;
+            listen 443 ssl;
+            ssl_certificate /etc/nginx/ssl/tls.crt;
+            ssl_certificate_key /etc/nginx/ssl/tls.key;
+            ssl_protocols TLSv1 TLSv1.2;
+
+    }
+---
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/tls
+metadata:
+  name: nginx-secret101
+data:
+  tls.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURhakNDQWxLZ0F3SUJBZ0lUUm05Y2t2L1VKY2JFckdzL1lWeU1xZk5UaFRBTkJna3Foa2lHOXcwQkFRc0YKQURCRk1Rc3dDUVlEVlFRR0V3SkJWVEVUTUJFR0ExVUVDQXdLVTI5dFpTMVRkR0YwWlRFaE1COEdBMVVFQ2d3WQpTVzUwWlhKdVpYUWdWMmxrWjJsMGN5QlFkSGtnVEhSa01CNFhEVEl3TURreE5ERTBOREExTjFvWERUSXhNRGt4Ck5ERTBOREExTjFvd1JURUxNQWtHQTFVRUJoTUNRVlV4RXpBUkJnTlZCQWdNQ2xOdmJXVXRVM1JoZEdVeElUQWYKQmdOVkJBb01HRWx1ZEdWeWJtVjBJRmRwWkdkcGRITWdVSFI1SUV4MFpEQ0NBU0l3RFFZSktvWklodmNOQVFFQgpCUUFEZ2dFUEFEQ0NBUW9DZ2dFQkFMNDFTQVluVlFSQ0ZCaERweWNZNThMQjZvK1BnV0tJUjdlemVXTnIxeWJtClZ6aTg1T1FuLzFQalNPa2UzR1pGa1FHaS8xejlxKzd2SHBPQXIzUm83ZlI1enJKdlc5UFptbytyQ0FTZUNsZnYKOEIrQlU0MnVjcVNTQXFjM3JMMHZDN05IRGdjcXVjbCs4NmxISW4wdEI3blBxcUZpZm45Mk5SSU9LYTZXZEErNgpDTW1hU04wQmZGK285TkpZWUlKNnRvRDhDVFhNMUZUS0Z5UXplSDFhd3hNWFBHNHdUTm8rTkI4NmdCRE5SK1VuCmdDZ0Jpai9VY0N2TUJFSjdDL1hiVmJxbWNJbmtUeVFXME1FdXdOdG1UYTREUlhYL3VPZHFDWS85UkJiL2pBa1EKeW1QU3F2aSs5WnBIQVVhR2hOc2MzUDJnRnErdTdFSEExdmN6cGxqSGFEa0NBd0VBQWFOVE1GRXdIUVlEVlIwTwpCQllFRkFVSDhPR2NDMVk1bUV4TC90R0dOcHl2VVZaTE1COEdBMVVkSXdRWU1CYUFGQVVIOE9HY0MxWTVtRXhMCi90R0dOcHl2VVZaTE1BOEdBMVVkRXdFQi93UUZNQU1CQWY4d0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFBSTcKRlVNbG90aVZCSzZWaUNuQ1dUOWY1RWRscFRvYUxtVzNFMUNBVXcwR1dSK0duVVRmRmdzRmRjYzMwUnVGWFhtagowS0Jac0orNmZRMU5hcHpMNXNPclBLeUUxNnV4RjhLTDFuR3VWMkFYWkJ3QnN5b2RqMXhMVFJPVzBkanFqdFpUCm5oQUhpNFN1TzIvNWVVK1FUUDE1NzdqeFJJdytiSUVWUHVwdXdrcWdnRGp2K0pEUUNOTG1HSkVwV1Bha3M4SXQKbVY1bDU5ajZTVVRTSnhUOHB0czdJVTlrbExzWjFIdTZJemdRalBvUkttaFJIN0VHdm1LOE5aaEdYekhzeVhESgp6ZGFLSDRUdlhSYmNoTWQ0NEx6TkZmUlNGV245WnZ6ZWhBY2VyTktuNjEzTkt0RnRDRWJhb09mcVVjSmdKV3pHCnVPVGw1VjB6TkwrMzVTQkhScVk9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+  tls.key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2UUlCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktjd2dnU2pBZ0VBQW9JQkFRQytOVWdHSjFVRVFoUVkKUTZjbkdPZkN3ZXFQajRGaWlFZTNzM2xqYTljbTVsYzR2T1RrSi85VDQwanBIdHhtUlpFQm92OWMvYXZ1N3g2VApnSzkwYU8zMGVjNnliMXZUMlpxUHF3Z0VuZ3BYNy9BZmdWT05ybktra2dLbk42eTlMd3V6Unc0SEtybkpmdk9wClJ5SjlMUWU1ejZxaFluNS9kalVTRGltdWxuUVB1Z2pKbWtqZEFYeGZxUFRTV0dDQ2VyYUEvQWsxek5SVXloY2sKTTNoOVdzTVRGenh1TUV6YVBqUWZPb0FRelVmbEo0QW9BWW8vMUhBcnpBUkNld3YxMjFXNnBuQ0o1RThrRnREQgpMc0RiWmsydUEwVjEvN2puYWdtUC9VUVcvNHdKRU1wajBxcjR2dldhUndGR2hvVGJITno5b0JhdnJ1eEJ3TmIzCk02Wll4Mmc1QWdNQkFBRUNnZ0VBRm52djVxSlJuMjQ4Tjk0UGJVUzVhTUZKZSt6bnk0RDJrVldLM09ETGp4S2QKYnR5TlpoY0FUS2RLWUJ4QXkyb2Z5UVMra1B4L2pZQUFxa2tFOUlyT3poNXorNDNFV2hlWCtMR3NBZmU0bTBxRwpwUUxCb0xibFlHVE9JWHdvVkRpeWRsL0kzYm9FT2poaWp6a1ViNTJhRXpIa0pxMmc3R3BKdmJlazM3bHpRTVIxCndvRzhIZE8yeFZBTVY0MWovQzJyWUE2REN3S2tuTTZQdjQybGhpd21XVnlRK2tWbE9wc291UnZuVzU3eUo4UlgKZ0JzODYrZjIvd1RkWFdaYTNaanh1OHRNWmRjYWFXVisrUXBlSGRmQTYwcDlkcFViR3BYQnF6eU1xTDQ1ak5kOApyMkVIZ1RoNm5Vb0xTcmdJbk9TUDRjVVV5M2R6QWpOVmZMbU15M00vclFLQmdRRGpHa0F2akhVaVM4eFg4endzCkRhalpaVm1adkxqazlTWUpwaUx1cTQvSFJwNGU5QlpMWk1hakdvUnRrWFM2UkZRSGpZUTVIMytZWnZJLzFkVDgKbFJuRlNad0lyWUg2b05za2UwZmFaTVd4UWpJVXlRcTBMbWR4Q1ZGNzZiQ0xUekdTRVZyOUptY2RnRjFFdG1nSgpVSHl3QkpYckUybUJkMWU3aFY5OUpMQjNLd0tCZ1FEV2FUYkpRczZlMSt5TlNaY1U2WnpHYWtDZWFhZjlSVXhWCk1rZDlYaFIxWXpvNEhkeExTQXppM0xTOEtwdTl3RldvNW9qcUw2c0hEcFFwWnI0c2wyTEhzNWVpUjZveDNXcUUKeERqUVVQWFhrZ0R5eDZPQnRaUDhVb1RLejVpLzdDcFFZaVBwNDZqRzVIVVo5TU4zTHBibHYvQm8yNXhHNGR4NgpVS1o1dS9nc0t3S0JnRW5EMGd0ZnZRQTV6SkxZcjdmRGJBL0k2clNUNXg1L1BpNnVKdlNOQnpOOERZb1NVRmVHCjBUcFRONlo3TTRYNUFhNCtXaTlQdXRzZXZScmM4c1JrRGEzV1BmZFhuRHR6R2hzY2EvZFUraDJjV2JZRW94UnAKYWpIK0M5aUt6RXhEbWQ5UEFkWHVMbG9Yd3JPNTU4cjJ1TGxYay9aNkpLL251cmh2RnRnSUhjVm5Bb0dBVU1UeAp6bjlNTnFwQWdqam1vUW9mOU42eDJQc1VQV1NOak1xVUE3WWRIdHR5WXhGY216OVpHMXpvK0xsVVVmYlNUZjRLCk5hNGZUMWsrbHhvTktkOGRadjFRY2VGdFM3dU5GTmFXVUdNdk9UWFhCWjRQQ2gzTTBaQ0VWYUkrZUk0T29wbFYKemhYa3pvZmhWUlhQVEdaUWtkdnNSSlAyR3YyYWdMbEEvVHJDRW1FQ2dZRUFtelVDZnB2cUhFYUJHaWUyVHZYTApneGkzVHpuTkdmQWQ4VzhTMXVKTGx6cW9WOTVWTHVOUzhBQmRRbkQ4QmlubGwvQUhvSWZsNGU4NGhXMHhUMFlBCmhnaFVvbXVHb0xROFAzSG1RdCtacDdUc243SDdEckVBT1N1a1hWVzV0Y3JtMmg5NzN4VDRjdXZmY1NYb0xuamEKS2d2UC9TQ0U5NWZ0aUhJSVNBWjVNdTA9Ci0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0K
