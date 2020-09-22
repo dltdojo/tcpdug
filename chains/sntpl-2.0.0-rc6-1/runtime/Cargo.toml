@@ -177,6 +177,18 @@ package = 'pallet-xasset'
 path = '../pallets/xasset'
 version = '2.0.0-rc6'
 
+[dependencies.sasset]
+default-features = false
+package = 'pallet-sasset'
+path = '../pallets/sasset'
+version = '2.0.0-rc6'
+
+[dependencies.foodex]
+default-features = false
+package = 'pallet-foodex'
+path = '../pallets/foodex'
+version = '2.0.0-rc6'
+
 [features]
 default = ['std']
 std = [
@@ -208,6 +220,8 @@ std = [
     'sp-version/std',
     'template/std',
     'xasset/std',
+    'sasset/std',
+    'foodex/std',
 ]
 
 [build-dependencies.wasm-builder-runner]
