@@ -3298,8 +3298,10 @@ dependencies = [
  "hex-literal 0.3.1",
  "pallet-aura",
  "pallet-balances",
+ "pallet-foodex",
  "pallet-grandpa",
  "pallet-randomness-collective-flip",
+ "pallet-sasset",
  "pallet-sudo",
  "pallet-template",
  "pallet-timestamp",
@@ -3537,6 +3539,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "pallet-foodex"
+version = "2.0.0"
+dependencies = [
+ "frame-support",
+ "frame-system",
+ "parity-scale-codec",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
+]
+
+[[package]]
 name = "pallet-grandpa"
 version = "2.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3569,6 +3584,19 @@ dependencies = [
  "frame-system",
  "parity-scale-codec",
  "safe-mix",
+ "sp-runtime",
+ "sp-std",
+]
+
+[[package]]
+name = "pallet-sasset"
+version = "2.0.0"
+dependencies = [
+ "frame-support",
+ "frame-system",
+ "parity-scale-codec",
+ "sp-core",
+ "sp-io",
  "sp-runtime",
  "sp-std",
 ]
