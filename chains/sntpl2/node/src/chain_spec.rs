@@ -8,6 +8,11 @@ use sp_finality_grandpa::AuthorityId as GrandpaId;
 use sp_runtime::traits::{Verify, IdentifyAccount};
 use sc_service::ChainType;
 
+use hex_literal::hex;
+pub const DEFAULT_PROTOCOL_ID: &str = "mi0n";
+pub const MI0N: u128 = 1_000_000_000_000;
+pub const ENDOWMENT: u128 = 1_680_000 * MI0N;
+
 // The URL for the telemetry server.
 // const STAGING_TELEMETRY_URL: &str = "wss://telemetry.polkadot.io/submit/";
 
@@ -41,9 +46,20 @@ pub fn authority_keys_from_seed(s: &str) -> (AuraId, GrandpaId) {
 pub fn development_config() -> Result<ChainSpec, String> {
 	let wasm_binary = WASM_BINARY.ok_or("Development wasm binary not available".to_string())?;
 
+	let data = r#"
+		{
+			"ss58Format": 42,
+			"tokenDecimals": 12,
+			"tokenSymbol": "MI0N"
+		}"#;
+
+	let properties = serde_json::from_str(data).unwrap();
+	// 5DDJbjEUgfje25QoDxDp8eqrZZzh5fmeKPiTChF8eVw7LLjp
+	let ddjmaster_id =  hex!("32cb266c4f62b7aeb348e99a111ba411167cb2b171a952102441a92e2913ee6a");
+
 	Ok(ChainSpec::from_genesis(
 		// Name
-		"Development",
+		"MI0N",
 		// ID
 		"dev",
 		ChainType::Development,
@@ -54,13 +70,14 @@ pub fn development_config() -> Result<ChainSpec, String> {
 				authority_keys_from_seed("Alice"),
 			],
 			// Sudo account
-			get_account_id_from_seed::<sr25519::Public>("Alice"),
+			ddjmaster_id.into(),
 			// Pre-funded accounts
 			vec![
 				get_account_id_from_seed::<sr25519::Public>("Alice"),
 				get_account_id_from_seed::<sr25519::Public>("Bob"),
 				get_account_id_from_seed::<sr25519::Public>("Alice//stash"),
 				get_account_id_from_seed::<sr25519::Public>("Bob//stash"),
+				ddjmaster_id.into(),
 			],
 			true,
 		),
@@ -69,9 +86,9 @@ pub fn development_config() -> Result<ChainSpec, String> {
 		// Telemetry
 		None,
 		// Protocol ID
-		None,
+		Some(DEFAULT_PROTOCOL_ID),
 		// Properties
-		None,
+		properties,
 		// Extensions
 		None,
 	))
@@ -141,7 +158,7 @@ fn testnet_genesis(
 		}),
 		pallet_balances: Some(BalancesConfig {
 			// Configure endowed accounts with initial balance of 1 << 60.
-			balances: endowed_accounts.iter().cloned().map(|k|(k, 1 << 60)).collect(),
+			balances: endowed_accounts.iter().cloned().map(|k|(k, ENDOWMENT)).collect(),
 		}),
 		pallet_aura: Some(AuraConfig {
 			authorities: initial_authorities.iter().map(|x| (x.0.clone())).collect(),
