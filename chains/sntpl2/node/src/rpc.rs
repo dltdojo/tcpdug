@@ -6,8 +6,8 @@
 #![warn(missing_docs)]
 
 use std::sync::Arc;
-
-use node_template_runtime::{opaque::Block, AccountId, Balance, Index};
+use primitives::{ Balance };
+use node_template_runtime::{opaque::Block, AccountId , Index};
 use sp_api::ProvideRuntimeApi;
 use sp_blockchain::{Error as BlockChainError, HeaderMetadata, HeaderBackend};
 use sp_block_builder::BlockBuilder;

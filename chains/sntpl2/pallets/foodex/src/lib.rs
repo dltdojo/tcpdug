@@ -19,29 +19,30 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
 // use sp_std::{fmt::Debug};
-use sp_runtime::{ traits::{
-	Member, AtLeast32Bit, AtLeast32BitUnsigned}};
+//use sp_runtime::{ traits::{
+//	Member, AtLeast32Bit, AtLeast32BitUnsigned}};
 // use codec::{Encode, Decode};
-use frame_support::{Parameter, decl_module, decl_event, decl_storage, decl_error,
-	traits::{ ReservableCurrency }
+use frame_support::{
+		decl_error, decl_event, decl_module, decl_storage, dispatch,
+		weights::{DispatchClass, Pays},
 };
 use frame_system::ensure_signed;
 
 // type BalanceOf<T> = <<T as Trait>::Currency as Currency<<T as frame_system::Trait>::AccountId>>::Balance;
+use primitives::{AssetId, Balance, Amount};
+
+use orml_traits::{MultiCurrency, MultiCurrencyExtended};
 
 /// The module configuration trait.
 pub trait Trait: frame_system::Trait {
 	/// The overarching event type.
 	type Event: From<Event<Self>> + Into<<Self as frame_system::Trait>::Event>;
-
-	/// The units in which we record balances.
-	type Balance: Member + Parameter + AtLeast32BitUnsigned + Default + Copy;
-
-	/// The arithmetic type of asset identifier.
-	type AssetId: Parameter + AtLeast32Bit + Default + Copy;
-
-	/// The currency mechanism.
-	type Currency: ReservableCurrency<Self::AccountId>;
+	type OrmlCurrency : MultiCurrencyExtended<
+		Self::AccountId,
+		CurrencyId = AssetId,
+		Balance = Balance,
+		Amount = Amount,
+	>;
 }
 
 decl_storage! {
@@ -55,13 +56,8 @@ decl_storage! {
 decl_event! {
 	pub enum Event<T> where
 		<T as frame_system::Trait>::AccountId,
-		<T as Trait>::Balance,
-		<T as Trait>::AssetId,
 	{
-		/// Some asset class was created. \[asset_id, creator, owner\]
-		Created(AssetId, AccountId, AccountId),
-		/// Some assets were issued. \[asset_id, owner, total_supply\]
-		Issued(AssetId, AccountId, Balance),
+		Mint(AccountId, AssetId, Balance),
 	}
 }
 
@@ -89,6 +85,14 @@ decl_module! {
 		#[weight = 0]
 		fn foo(origin) {
 			let _origin = ensure_signed(origin)?;
+		}
+
+		#[weight = (10_000, DispatchClass::Normal, Pays::No)]
+		pub fn mint(origin, asset: AssetId, amount: Balance) -> dispatch::DispatchResult {
+			let who = ensure_signed(origin)?;
+			T::OrmlCurrency::deposit(asset, &who, amount)?;
+			Self::deposit_event(RawEvent::Mint(who, asset, amount));
+			Ok(())
 		}
 	}
 }

@@ -25,6 +25,7 @@ hex-literal = { optional = true, version = '0.3.1' }
 serde = { features = ['derive'], optional = true, version = '1.0.101' }
 
 # local dependencies
+primitives = { path = '../primitives', default-features = false, version = '2.0.0' }
 pallet-template = { path = '../pallets/template', default-features = false, version = '2.0.0' }
 pallet-sasset = { path = '../pallets/sasset', default-features = false, version = '2.0.0' }
 pallet-foodex = { path = '../pallets/foodex', default-features = false, version = '2.0.0' }
@@ -55,6 +56,9 @@ sp-session = { default-features = false, version = '2.0.0' }
 sp-std = { default-features = false, version = '2.0.0' }
 sp-transaction-pool = { default-features = false, version = '2.0.0' }
 sp-version = { default-features = false, version = '2.0.0' }
+orml-tokens = { default-features = false, version = '0.3.0' }
+orml-traits = { default-features = false, version = '0.3.0' }
+orml-currencies = { default-features = false, version = '0.3.0' }
 
 [features]
 default = ['std']
@@ -95,4 +99,7 @@ std = [
     'sp-std/std',
     'sp-transaction-pool/std',
     'sp-version/std',
+    'orml-currencies/std',
+    'orml-traits/std',
+    'orml-tokens/std',
 ]

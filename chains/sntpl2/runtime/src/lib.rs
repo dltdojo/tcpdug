@@ -41,6 +41,8 @@ pub use frame_support::{
 /// Import the template pallet.
 pub use pallet_template;
 
+use orml_currencies::BasicCurrencyAdapter;
+
 /// An index to a block.
 pub type BlockNumber = u32;
 
@@ -55,8 +57,6 @@ pub type AccountId = <<Signature as Verify>::Signer as IdentifyAccount>::Account
 /// never know...
 pub type AccountIndex = u32;
 
-/// Balance of an account.
-pub type Balance = u128;
 
 /// Index of a transaction in the chain.
 pub type Index = u32;
@@ -66,6 +66,8 @@ pub type Hash = sp_core::H256;
 
 /// Digest item type.
 pub type DigestItem = generic::DigestItem<Hash>;
+
+use primitives::{AssetId, Balance, Amount};
 
 /// Opaque types. These are used by the CLI to instantiate machinery that don't need to know
 /// the specifics of the runtime. They can then be made to be agnostic over specific formats
@@ -275,9 +277,30 @@ impl pallet_sasset::Trait for Runtime {
 
 impl pallet_foodex::Trait for Runtime {
 	type Event = Event;
-	type Currency = Balances;
+	type OrmlCurrency = Currencies;
+}
+
+impl orml_tokens::Trait for Runtime {
+	type Event = Event;
 	type Balance = Balance;
-	type AssetId = u32;
+	type Amount = Amount;
+	type CurrencyId = AssetId;
+	type OnReceived = ();
+	type WeightInfo = ();
+}
+
+parameter_types! {
+	pub const NativeAssetId: AssetId = 1;
+}
+
+pub type AdaptedBasicCurrency = BasicCurrencyAdapter<Runtime, Balances, Amount, Amount>;
+
+impl orml_currencies::Trait for Runtime {
+	type Event = Event;
+	type MultiCurrency = Tokens;
+	type NativeCurrency = AdaptedBasicCurrency;
+	type GetNativeCurrencyId = NativeAssetId;
+	type WeightInfo = ();
 }
 
 // Create the runtime by composing the FRAME pallets that were previously configured.
@@ -299,6 +322,8 @@ construct_runtime!(
 		TemplateModule: pallet_template::{Module, Call, Storage, Event<T>},
 		SassetModule: pallet_sasset::{Module, Call, Storage, Event<T>},
 		FoodexModule: pallet_foodex::{Module, Call, Storage, Event<T>},
+		Tokens: orml_tokens::{ Module, Storage, Call, Config<T>, Event<T>},
+		Currencies: orml_currencies::{ Module, Call, Event<T>},
 	}
 );
 

@@ -7,5 +7,6 @@ members = [
     'pallets/template',
     'pallets/sasset',
     'pallets/foodex',
+    'primitives',
     'runtime',
 ]
