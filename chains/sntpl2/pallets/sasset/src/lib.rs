@@ -134,17 +134,25 @@
 // Ensure we're `no_std` when compiling for Wasm.
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use sp_std::{fmt::Debug};
-use sp_runtime::{RuntimeDebug, traits::{
-	Member, AtLeast32Bit, AtLeast32BitUnsigned, Zero, StaticLookup, Saturating, CheckedSub
-}};
-use codec::{Encode, Decode};
-use frame_support::{Parameter, decl_module, decl_event, decl_storage, decl_error, ensure,
-	traits::{Currency, ReservableCurrency}, dispatch::DispatchResult,
+use codec::{Decode, Encode};
+use frame_support::{
+	decl_error, decl_event, decl_module, decl_storage,
+	dispatch::DispatchResult,
+	ensure,
+	traits::{Currency, ReservableCurrency},
+	Parameter,
 };
 use frame_system::ensure_signed;
+use sp_runtime::{
+	traits::{
+		AtLeast32Bit, AtLeast32BitUnsigned, CheckedSub, Member, Saturating, StaticLookup, Zero,
+	},
+	RuntimeDebug,
+};
+use sp_std::fmt::Debug;
 
-type BalanceOf<T> = <<T as Trait>::Currency as Currency<<T as frame_system::Trait>::AccountId>>::Balance;
+type BalanceOf<T> =
+	<<T as Trait>::Currency as Currency<<T as frame_system::Trait>::AccountId>>::Balance;
 
 /// The module configuration trait.
 pub trait Trait: frame_system::Trait {
@@ -188,9 +196,7 @@ pub struct AssetDetails<
 }
 
 #[derive(Clone, Encode, Decode, Eq, PartialEq, RuntimeDebug, Default)]
-pub struct AccountData<
-	Balance: Encode + Decode + Clone + Debug + Eq + PartialEq,
-> {
+pub struct AccountData<Balance: Encode + Decode + Clone + Debug + Eq + PartialEq> {
 	/// The balance.
 	balance: Balance,
 	/// Whether the account is frozen.
@@ -533,7 +539,9 @@ impl<T: Trait> Module<T> {
 
 	/// Get the total supply of an asset `id`.
 	pub fn total_supply(id: T::AssetId) -> T::Balance {
-		Details::<T>::get(id).map(|x| x.supply).unwrap_or_else(Zero::zero)
+		Details::<T>::get(id)
+			.map(|x| x.supply)
+			.unwrap_or_else(Zero::zero)
 	}
 }
 
@@ -541,9 +549,15 @@ impl<T: Trait> Module<T> {
 mod tests {
 	use super::*;
 
-	use frame_support::{impl_outer_origin, assert_ok, assert_noop, parameter_types, weights::Weight};
+	use frame_support::{
+		assert_noop, assert_ok, impl_outer_origin, parameter_types, weights::Weight,
+	};
 	use sp_core::H256;
-	use sp_runtime::{Perbill, traits::{BlakeTwo256, IdentityLookup}, testing::Header};
+	use sp_runtime::{
+		testing::Header,
+		traits::{BlakeTwo256, IdentityLookup},
+		Perbill,
+	};
 
 	impl_outer_origin! {
 		pub enum Origin for Test where system = frame_system {}
@@ -611,7 +625,10 @@ mod tests {
 	type Assets = Module<Test>;
 
 	fn new_test_ext() -> sp_io::TestExternalities {
-		frame_system::GenesisConfig::default().build_storage::<Test>().unwrap().into()
+		frame_system::GenesisConfig::default()
+			.build_storage::<Test>()
+			.unwrap()
+			.into()
 	}
 
 	#[test]
@@ -664,7 +681,10 @@ mod tests {
 			assert_eq!(Assets::balance(0, 2), 50);
 			assert_ok!(Assets::burn(Origin::signed(1), 0, 1, u64::max_value()));
 			assert_eq!(Assets::balance(0, 1), 0);
-			assert_noop!(Assets::transfer(Origin::signed(1), 0, 1, 50), Error::<Test>::BalanceLow);
+			assert_noop!(
+				Assets::transfer(Origin::signed(1), 0, 1, 50),
+				Error::<Test>::BalanceLow
+			);
 		});
 	}
 
@@ -674,7 +694,10 @@ mod tests {
 			assert_ok!(Assets::create(Origin::signed(1), 0, 1));
 			assert_ok!(Assets::mint(Origin::signed(1), 0, 1, 100));
 			assert_eq!(Assets::balance(0, 1), 100);
-			assert_noop!(Assets::transfer(Origin::signed(1), 0, 2, 0), Error::<Test>::AmountZero);
+			assert_noop!(
+				Assets::transfer(Origin::signed(1), 0, 2, 0),
+				Error::<Test>::AmountZero
+			);
 		});
 	}
 
@@ -684,7 +707,10 @@ mod tests {
 			assert_ok!(Assets::create(Origin::signed(1), 0, 1));
 			assert_ok!(Assets::mint(Origin::signed(1), 0, 1, 100));
 			assert_eq!(Assets::balance(0, 1), 100);
-			assert_noop!(Assets::transfer(Origin::signed(1), 0, 2, 101), Error::<Test>::BalanceLow);
+			assert_noop!(
+				Assets::transfer(Origin::signed(1), 0, 2, 101),
+				Error::<Test>::BalanceLow
+			);
 		});
 	}
 
@@ -704,7 +730,10 @@ mod tests {
 			assert_ok!(Assets::create(Origin::signed(1), 0, 1));
 			assert_ok!(Assets::mint(Origin::signed(1), 0, 1, 100));
 			assert_eq!(Assets::balance(0, 2), 0);
-			assert_noop!(Assets::burn(Origin::signed(1), 0, 2, u64::max_value()), Error::<Test>::BalanceZero);
+			assert_noop!(
+				Assets::burn(Origin::signed(1), 0, 2, u64::max_value()),
+				Error::<Test>::BalanceZero
+			);
 		});
 	}
 }

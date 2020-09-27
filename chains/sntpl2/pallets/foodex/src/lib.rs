@@ -1,35 +1,12 @@
-// https://github.com/paritytech/substrate/blob/ddf83eb5ab514588281fb20aac9df4e048a5508b/frame/assets/src/lib.rs
-// This file is part of Substrate.
-
-// Copyright (C) 2017-2020 Parity Technologies (UK) Ltd.
-// SPDX-License-Identifier: Apache-2.0
-
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// 	http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 #![cfg_attr(not(feature = "std"), no_std)]
 
-// use sp_std::{fmt::Debug};
-//use sp_runtime::{ traits::{
-//	Member, AtLeast32Bit, AtLeast32BitUnsigned}};
-// use codec::{Encode, Decode};
 use frame_support::{
-		decl_error, decl_event, decl_module, decl_storage, dispatch,
-		weights::{DispatchClass, Pays},
+	decl_error, decl_event, decl_module, decl_storage, dispatch,
+	weights::{DispatchClass, Pays},
 };
 use frame_system::ensure_signed;
 
-// type BalanceOf<T> = <<T as Trait>::Currency as Currency<<T as frame_system::Trait>::AccountId>>::Balance;
-use primitives::{AssetId, Balance, Amount};
+use primitives::{Amount, AssetId, Balance};
 
 use orml_traits::{MultiCurrency, MultiCurrencyExtended};
 
@@ -37,7 +14,7 @@ use orml_traits::{MultiCurrency, MultiCurrencyExtended};
 pub trait Trait: frame_system::Trait {
 	/// The overarching event type.
 	type Event: From<Event<Self>> + Into<<Self as frame_system::Trait>::Event>;
-	type OrmlCurrency : MultiCurrencyExtended<
+	type OrmlCurrency: MultiCurrencyExtended<
 		Self::AccountId,
 		CurrencyId = AssetId,
 		Balance = Balance,
@@ -63,15 +40,6 @@ decl_event! {
 
 decl_error! {
 	pub enum Error for Module<T: Trait> {
-		/// Transfer amount should be non-zero
-		AmountZero,
-		/// Account balance must be greater than or equal to the transfer amount
-		BalanceLow,
-		/// Balance should be non-zero
-		BalanceZero,
-		/// The signing account has no permission to do the operation.
-		NoPermission,
-		/// The given asset ID is unknown.
 		Unknown,
 	}
 }
@@ -97,28 +65,19 @@ decl_module! {
 	}
 }
 
-// The main implementation block for the module.
-impl<T: Trait> Module<T> {
-	// Public immutables
-
-	// Get the asset `id` balance of `who`.
-	//pub fn balance(id: T::AssetId, who: T::AccountId) -> T::Balance {
-	//	Account::<T>::get(id, who).balance
-	//}
-
-	// Get the total supply of an asset `id`.
-	//pub fn total_supply(id: T::AssetId) -> T::Balance {
-	//	Details::<T>::get(id).map(|x| x.supply).unwrap_or_else(Zero::zero)
-	//}
-}
-
 #[cfg(test)]
 mod tests {
 	use super::*;
 
-	use frame_support::{impl_outer_origin, assert_ok, assert_noop, parameter_types, weights::Weight};
+	use frame_support::{
+		assert_noop, assert_ok, impl_outer_origin, parameter_types, weights::Weight,
+	};
 	use sp_core::H256;
-	use sp_runtime::{Perbill, traits::{BlakeTwo256, IdentityLookup}, testing::Header};
+	use sp_runtime::{
+		testing::Header,
+		traits::{BlakeTwo256, IdentityLookup},
+		Perbill,
+	};
 
 	impl_outer_origin! {
 		pub enum Origin for Test where system = frame_system {}
@@ -185,7 +144,10 @@ mod tests {
 	type FoodexModule = Module<Test>;
 
 	fn new_test_ext() -> sp_io::TestExternalities {
-		frame_system::GenesisConfig::default().build_storage::<Test>().unwrap().into()
+		frame_system::GenesisConfig::default()
+			.build_storage::<Test>()
+			.unwrap()
+			.into()
 	}
 
 	#[test]
@@ -194,5 +156,4 @@ mod tests {
 			assert_ok!(FoodexModule::foo(Origin::signed(1)));
 		});
 	}
-	
 }
