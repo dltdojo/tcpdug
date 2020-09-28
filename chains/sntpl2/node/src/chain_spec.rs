@@ -1,6 +1,6 @@
 use node_template_runtime::{
 	AccountId, AuraConfig, BalancesConfig, GenesisConfig, GrandpaConfig, Signature, SudoConfig,
-	SystemConfig, TokensConfig, WASM_BINARY,
+	SystemConfig, OrmlTokensConfig, WASM_BINARY,
 };
 use sp_core::{sr25519, Pair, Public};
 
@@ -165,7 +165,7 @@ fn testnet_genesis(
 				.map(|k| (k, ENDOWMENT))
 				.collect(),
 		}),
-		orml_tokens: Some(TokensConfig {
+		orml_tokens: Some(OrmlTokensConfig {
 			endowed_accounts: endowed_accounts
 				.iter()
 				.flat_map(|x| {

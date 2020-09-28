@@ -278,7 +278,7 @@ impl pallet_sasset::Trait for Runtime {
 
 impl pallet_foodex::Trait for Runtime {
 	type Event = Event;
-	type OrmlCurrency = Currencies;
+	type OrmlCurrency = OrmlCurrencies;
 }
 
 impl orml_tokens::Trait for Runtime {
@@ -298,7 +298,7 @@ pub type AdaptedBasicCurrency = BasicCurrencyAdapter<Runtime, Balances, Amount, 
 
 impl orml_currencies::Trait for Runtime {
 	type Event = Event;
-	type MultiCurrency = Tokens;
+	type MultiCurrency = OrmlTokens;
 	type NativeCurrency = AdaptedBasicCurrency;
 	type GetNativeCurrencyId = NativeAssetId;
 	type WeightInfo = ();
@@ -321,10 +321,10 @@ construct_runtime!(
 		Sudo: pallet_sudo::{Module, Call, Config<T>, Storage, Event<T>},
 		// Include the custom logic from the template pallet in the runtime.
 		TemplateModule: pallet_template::{Module, Call, Storage, Event<T>},
-		SassetModule: pallet_sasset::{Module, Call, Storage, Event<T>},
-		FoodexModule: pallet_foodex::{Module, Call, Storage, Event<T>},
-		Tokens: orml_tokens::{ Module, Storage, Call, Config<T>, Event<T>},
-		Currencies: orml_currencies::{ Module, Call, Event<T>},
+		TcSassetModule: pallet_sasset::{Module, Call, Storage, Event<T>},
+		TcFoodexModule: pallet_foodex::{Module, Call, Storage, Event<T>},
+		OrmlTokens: orml_tokens::{ Module, Storage, Call, Config<T>, Event<T>},
+		OrmlCurrencies: orml_currencies::{ Module, Call, Event<T>},
 	}
 );
 
