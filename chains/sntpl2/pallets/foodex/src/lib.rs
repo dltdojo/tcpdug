@@ -2,9 +2,11 @@
 
 use frame_support::{
 	decl_error, decl_event, decl_module, decl_storage, dispatch,
+	traits::EnsureOrigin,
 	weights::{DispatchClass, Pays},
 };
 use frame_system::ensure_signed;
+use sp_runtime::traits::{StaticLookup};
 
 use primitives::{Amount, AssetId, Balance};
 
@@ -20,6 +22,11 @@ pub trait Trait: frame_system::Trait {
 		Balance = Balance,
 		Amount = Amount,
 	>;
+
+	// Origins are used to identify network participants and control access.
+	// This is used to identify the pallet's admin.
+	// https://substrate.dev/docs/en/knowledgebase/runtime/origin
+	type EnsureRoot: EnsureOrigin<Self::Origin>;
 }
 
 decl_storage! {
@@ -53,6 +60,16 @@ decl_module! {
 		#[weight = 0]
 		fn foo(origin) {
 			let _origin = ensure_signed(origin)?;
+		}
+
+		#[weight = (10_000, DispatchClass::Normal, Pays::No)]
+		fn sudo_mint( origin, target: <T::Lookup as StaticLookup>::Source , asset: AssetId, amount: Balance) -> dispatch::DispatchResult {
+			// https://github.com/paritytech/substrate/blob/58d6df36f32452027010d7f532c9aaa5ded54570/frame/nicks/src/lib.rs#L202
+			T::EnsureRoot::ensure_origin(origin)?;
+			let who = T::Lookup::lookup(target)?;
+			T::OrmlCurrency::deposit(asset, &who, amount)?;
+			Self::deposit_event(RawEvent::Mint(who, asset, amount));
+			Ok(())
 		}
 
 		#[weight = (10_000, DispatchClass::Normal, Pays::No)]

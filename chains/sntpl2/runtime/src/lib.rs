@@ -279,6 +279,9 @@ impl pallet_sasset::Trait for Runtime {
 impl pallet_foodex::Trait for Runtime {
 	type Event = Event;
 	type OrmlCurrency = OrmlCurrencies;
+	// Configure the FRAME System Root origin as the pallet admin.
+	// https://substrate.dev/rustdocs/v2.0.0/frame_system/enum.RawOrigin.html#variant.Root
+	type EnsureRoot = frame_system::EnsureRoot<AccountId>;
 }
 
 impl orml_tokens::Trait for Runtime {
