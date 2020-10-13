@@ -12,6 +12,13 @@
 - DevDocs(Chinese)
   - [Substrate 技术资源列表 - 知乎](https://zhuanlan.zhihu.com/p/173576039)
   - [SubstrateCourse](https://github.com/SubstrateCourse)
+- Rust
+  - [Table of Contents - Rust Cookbook](https://rust-lang-nursery.github.io/rust-cookbook/intro.html)
+  - [Tour of Rust - Let's go on an adventure!](https://tourofrust.com/00_en.html)
+  - [Dhghomon/easy_rust: Rust explained using easy English](https://github.com/Dhghomon/easy_rust)
+  - [ZhangHanDong/tao-of-rust-codes: 《Rust编程之道》随书源码](https://github.com/ZhangHanDong/tao-of-rust-codes)
+  - [MikeLoveRust - 个人中心 - 云+社区 - 腾讯云](https://cloud.tencent.com/developer/user/1124784)
+ 
 
 # 社群
 

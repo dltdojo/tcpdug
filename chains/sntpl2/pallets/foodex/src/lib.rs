@@ -1,14 +1,16 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
 use frame_support::{
-	decl_error, decl_event, decl_module, decl_storage, dispatch,
+	decl_error, decl_event, decl_module, decl_storage, dispatch, ensure,
 	traits::EnsureOrigin,
 	weights::{DispatchClass, Pays},
 };
 use frame_system::ensure_signed;
-use sp_runtime::traits::{StaticLookup};
-
-use primitives::{Amount, AssetId, Balance};
+use primitives::{Amount, AssetId, Balance, Price};
+use sp_runtime::{
+	traits::{StaticLookup, Zero},
+	FixedPointNumber,
+};
 
 use orml_traits::{MultiCurrency, MultiCurrencyExtended};
 
@@ -48,6 +50,10 @@ decl_event! {
 decl_error! {
 	pub enum Error for Module<T: Trait> {
 		Unknown,
+		CannotCreatePoolWithZeroLiquidity,
+		CannotCreatePoolWithZeroInitialPrice,
+		CannotCreatePoolWithSameAssets,
+		TokenPoolAlreadyExists,
 	}
 }
 
@@ -79,7 +85,43 @@ decl_module! {
 			Self::deposit_event(RawEvent::Mint(who, asset, amount));
 			Ok(())
 		}
+
+		#[weight = 10_000]
+		pub fn create_swap_pool(origin, asset_a: AssetId, asset_b: AssetId, amount: Balance, initial_price: Price) -> dispatch::DispatchResult {
+			// https://github.com/galacticcouncil/hack.HydraDX-node/blob/7ce0806150c41d61eca18d6d26ed1e710572aa10/pallets/amm/src/lib.rs#L173
+			let who = ensure_signed(origin)?;
+			ensure!(
+				!amount.is_zero(),
+				Error::<T>::CannotCreatePoolWithZeroLiquidity
+			);
+			ensure!(
+				!initial_price.is_zero(),
+				Error::<T>::CannotCreatePoolWithZeroInitialPrice
+			);
+			ensure!(
+				asset_a != asset_b,
+				Error::<T>::CannotCreatePoolWithSameAssets
+			);
+
+			ensure!(
+				!Self::exists(asset_a, asset_b),
+				Error::<T>::TokenPoolAlreadyExists
+			);
+
+			// TODO
+			Ok(())
+		}
 	}
+}
+
+impl<T: Trait> Module<T> {
+	// Public immutables
+	// https://github.com/galacticcouncil/hack.HydraDX-node/blob/0a10dfdc6648d40d19853938d811e0ac8e3627a7/pallets/amm/src/lib.rs#L574
+	fn exists(asset_a: AssetId, asset_b: AssetId) -> bool {
+		// TODO
+		false
+	}
+
 }
 
 #[cfg(test)]

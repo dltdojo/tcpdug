@@ -93,7 +93,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html" class="active"><strong aria-hidden="true">1.</strong> TCPDUG</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="volunteers.html"><strong aria-hidden="true">1.1.</strong> 志工徵求</a></li></ol></li><li class="chapter-item expanded "><a href="events/index.html"><strong aria-hidden="true">2.</strong> 活動事件</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="events/event2020.html"><strong aria-hidden="true">2.1.</strong> 2020</a></li></ol></li><li class="chapter-item expanded "><a href="devlog/index.html"><strong aria-hidden="true">3.</strong> 開發日誌</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="devlog/log202009.html"><strong aria-hidden="true">3.1.</strong> 202009</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html" class="active"><strong aria-hidden="true">1.</strong> TCPDUG</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="volunteers.html"><strong aria-hidden="true">1.1.</strong> 志工徵求</a></li></ol></li><li class="chapter-item expanded "><a href="events/index.html"><strong aria-hidden="true">2.</strong> 活動事件</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="events/event2020.html"><strong aria-hidden="true">2.1.</strong> 2020</a></li></ol></li><li class="chapter-item expanded "><a href="devlog/index.html"><strong aria-hidden="true">3.</strong> 開發日誌</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="devlog/log202009.html"><strong aria-hidden="true">3.1.</strong> 2020-09</a></li><li class="chapter-item expanded "><a href="devlog/log202010.html"><strong aria-hidden="true">3.2.</strong> 2020-10</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -184,6 +184,15 @@
 <li><a href="https://github.com/SubstrateCourse">SubstrateCourse</a></li>
 </ul>
 </li>
+<li>Rust
+<ul>
+<li><a href="https://rust-lang-nursery.github.io/rust-cookbook/intro.html">Table of Contents - Rust Cookbook</a></li>
+<li><a href="https://tourofrust.com/00_en.html">Tour of Rust - Let's go on an adventure!</a></li>
+<li><a href="https://github.com/Dhghomon/easy_rust">Dhghomon/easy_rust: Rust explained using easy English</a></li>
+<li><a href="https://github.com/ZhangHanDong/tao-of-rust-codes">ZhangHanDong/tao-of-rust-codes: 《Rust编程之道》随书源码</a></li>
+<li><a href="https://cloud.tencent.com/developer/user/1124784">MikeLoveRust - 个人中心 - 云+社区 - 腾讯云</a></li>
+</ul>
+</li>
 </ul>
 <h1><a class="header" href="#社群" id="社群">社群</a></h1>
 <ul>
@@ -245,6 +254,21 @@
 
         </div>
 
+        
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         
 
         

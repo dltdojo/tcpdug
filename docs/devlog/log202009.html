@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>202009 - TaiChung PolkaDot UserGroup</title>
+        <title>2020-09 - TaiChung PolkaDot UserGroup</title>
         
         
 
@@ -93,7 +93,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html"><strong aria-hidden="true">1.</strong> TCPDUG</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../volunteers.html"><strong aria-hidden="true">1.1.</strong> 志工徵求</a></li></ol></li><li class="chapter-item expanded "><a href="../events/index.html"><strong aria-hidden="true">2.</strong> 活動事件</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../events/event2020.html"><strong aria-hidden="true">2.1.</strong> 2020</a></li></ol></li><li class="chapter-item expanded "><a href="../devlog/index.html"><strong aria-hidden="true">3.</strong> 開發日誌</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../devlog/log202009.html" class="active"><strong aria-hidden="true">3.1.</strong> 202009</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html"><strong aria-hidden="true">1.</strong> TCPDUG</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../volunteers.html"><strong aria-hidden="true">1.1.</strong> 志工徵求</a></li></ol></li><li class="chapter-item expanded "><a href="../events/index.html"><strong aria-hidden="true">2.</strong> 活動事件</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../events/event2020.html"><strong aria-hidden="true">2.1.</strong> 2020</a></li></ol></li><li class="chapter-item expanded "><a href="../devlog/index.html"><strong aria-hidden="true">3.</strong> 開發日誌</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../devlog/log202009.html" class="active"><strong aria-hidden="true">3.1.</strong> 2020-09</a></li><li class="chapter-item expanded "><a href="../devlog/log202010.html"><strong aria-hidden="true">3.2.</strong> 2020-10</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -160,6 +160,15 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#2020-09" id="2020-09">2020 09</a></h1>
+<h2><a class="header" href="#2020-0920" id="2020-0920">2020-0920</a></h2>
+<ul>
+<li><a href="https://github.com/opensquare-network/opensquare">opensquare-network/opensquare: Node implementation of OpenSquare Network based on substrate</a></li>
+<li><a href="https://github.com/galacticcouncil/hack.HydraDX-node">galacticcouncil/hack.HydraDX-node: Hydra node for Hackusama</a></li>
+<li><a href="https://github.com/galacticcouncil/hack.HydraDX-node/blob/f2397ea3663a3da80217e2f857406f58ebdd065a/pallets/amm/Cargo.toml">hack.HydraDX-node/Cargo.toml at f2397ea3663a3da80217e2f857406f58ebdd065a · galacticcouncil/hack.HydraDX-node</a></li>
+<li><a href="https://github.com/paritytech/substrate/pull/6912">decouple transaction payment and currency by weichweich · Pull Request #6912 · paritytech/substrate</a></li>
+<li><a href="https://github.com/open-web3-stack/open-runtime-module-library/tree/master/currencies">open-runtime-module-library/currencies at master · open-web3-stack/open-runtime-module-library</a></li>
+<li><a href="https://substrate.dev/recipes/fees.html">Transaction Fees for Economic Security - Substrate Recipes</a></li>
+</ul>
 <h2><a class="header" href="#2020-0917" id="2020-0917">2020-0917</a></h2>
 <p>github 的容器庫有兩種版本，可以無登入公開拉取的容器庫需推到 ghcr.io </p>
 <ul>
@@ -262,6 +271,10 @@ tcpdug/chains/sntpl-2.0.0-rc6-1$ target/debug/node-template --dev
                         
 
                         
+                            <a rel="next" href="../devlog/log202010.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -276,10 +289,29 @@ tcpdug/chains/sntpl-2.0.0-rc6-1$ target/debug/node-template --dev
                 
 
                 
+                    <a rel="next" href="../devlog/log202010.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
             </nav>
 
         </div>
 
+        
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         
 
         
