@@ -6,7 +6,7 @@
 #![warn(missing_docs)]
 
 use node_template_runtime::{opaque::Block, AccountId, Index};
-use primitives::Balance;
+use primitives_base::Balance;
 pub use sc_rpc_api::DenyUnsafe;
 use sp_api::ProvideRuntimeApi;
 use sp_block_builder::BlockBuilder;

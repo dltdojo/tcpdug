@@ -6,7 +6,7 @@ use frame_support::{
 	weights::{DispatchClass, Pays},
 };
 use frame_system::ensure_signed;
-use primitives::{Amount, AssetId, Balance, Price};
+use primitives_base::{Amount, AssetId, Balance, Price};
 use sp_runtime::{
 	traits::{StaticLookup, Zero},
 	FixedPointNumber,
